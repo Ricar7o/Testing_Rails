@@ -5,4 +5,6 @@ class Message < ActiveRecord::Base
   belongs_to :sender, class_name: 'User', foreign_key: 'sender_id'
 
   scope :unread, -> { where(read: false) }
+
+  # Message.new(body: "Hello there!").deliver!(sending: harsh, receiving: matt)
 end
