@@ -6,5 +6,15 @@ class Message < ActiveRecord::Base
 
   scope :unread, -> { where(read: false) }
 
+  # Deliver this message from sender to recipient.
+  #
+  # sending   - The User sending the message.
+  # receiving - The User receiving the message.
+  #
+  # Returns the delivered Message.
+  def deliver!(sending: nil, receiving: nil)
+    raise ArgumentError, "both sender and receivver must be specified" unless sending && receiving
+  end
+
   # Message.new(body: "Hello there!").deliver!(sending: harsh, receiving: matt)
 end
