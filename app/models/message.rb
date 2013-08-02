@@ -16,6 +16,7 @@ class Message < ActiveRecord::Base
     self.sender = sending
     self.recipient = receiving
     raise ArgumentError, "both sender and recipient must be specified" unless sending && receiving
+    self.save 
   end
 
   # Message.new(body: "Hello there!").deliver!(sending: harsh, receiving: matt)
