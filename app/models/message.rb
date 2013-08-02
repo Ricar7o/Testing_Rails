@@ -13,7 +13,9 @@ class Message < ActiveRecord::Base
   #
   # Returns the delivered Message.
   def deliver!(sending: nil, receiving: nil)
-    raise ArgumentError, "both sender and receivver must be specified" unless sending && receiving
+    self.sender = sending
+    self.recipient = receiving
+    raise ArgumentError, "both sender and recipient must be specified" unless sending && receiving
   end
 
   # Message.new(body: "Hello there!").deliver!(sending: harsh, receiving: matt)

@@ -3,10 +3,21 @@ require 'spec_helper'
 describe Message do 
   describe '.deliver!' do 
     let(:message) { Message.new(body: 'Hello, there!') }
+    let(:sender)    { mock_model(User) }
+    let(:recipient) { mock_model(User) }
     context 'when both the sender and recipient are specified' do
-      it 'should set the sender of the message'
+      it 'should set the sender of the message' do
+        message.deliver! sending: sender, receiving: recipient
 
-      it 'should set the recipient of the message'
+        expect(message.sender).to eq(sender)
+      end
+
+      it 'should set the recipient of the message' do 
+        message.deliver! receiving: recipient, sending: sender
+
+        expect(message.recipient).to eq(recipient)
+
+      end
 
       it 'should persist the message to the database'
     end
@@ -18,11 +29,15 @@ describe Message do
     end
 
     context 'when only the sender is specified' do
-      it 'should raise an error'
+      it 'should raise an error' do
+        expect { message.deliver! sending: sender }.to raise_error ArgumentError
+      end
     end
 
     context 'when only the recipient is specified' do
-      it 'should raise an error'
+      it 'should raise an error' do
+        expect { message.deliver! receiving: recipient }.to raise_error ArgumentError
+      end
     end
   end
 end
