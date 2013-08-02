@@ -6,15 +6,15 @@ describe Message do
     let(:sender)    { mock_model(User) }
     let(:recipient) { mock_model(User) }
     context 'when both the sender and recipient are specified' do
-      it 'should set the sender of the message' do
+      before(:each) do
         message.deliver! sending: sender, receiving: recipient
+      end
 
+      it 'should set the sender of the message' do
         expect(message.sender).to eq(sender)
       end
 
       it 'should set the recipient of the message' do 
-        message.deliver! receiving: recipient, sending: sender
-
         expect(message.recipient).to eq(recipient)
 
       end
