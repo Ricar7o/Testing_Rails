@@ -15,6 +15,7 @@ class Message < ActiveRecord::Base
   def deliver!(sending: nil, receiving: nil)
     self.sender = sending
     self.recipient = receiving
+    raise "the body of the message must not be empty" if self.body.blank?
     raise ArgumentError, "both sender and recipient must be specified" unless sending && receiving
     self.save 
   end

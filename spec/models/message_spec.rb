@@ -24,6 +24,12 @@ describe Message do
       end
     end
 
+    context 'when the content of the message body is nil' do
+      it 'should raise an error' do
+        expect { message.deliver! }.to raise_error 
+      end
+    end
+
     context 'when neither the sender or recipient is specified' do
       it 'should raise an error' do
         expect { message.deliver! }.to raise_error ArgumentError
